@@ -21,9 +21,9 @@ def tiempo_entrega():
 	aux = random()
 
 	# Tiempo en dias
-	if aux < 0.2: return 1
-	elif aux < 0.50: return 2
-	elif aux < 0.85: return 3
+	if aux <= 0.2: return 1
+	elif aux <= 0.50: return 2
+	elif aux <= 0.85: return 3
 	else: return 4
 
 # Distribucion de probabilidades de la demanda diaria
@@ -31,11 +31,11 @@ def demanda_diaria():
 	aux = random()
 
 	# Unidades
-	if aux < 0.05: return 12
-	elif aux < 0.20: return 13
-	elif aux < 0.45: return 14
-	elif aux < 0.80: return 15
-	elif aux < 0.95: return 16
+	if aux <= 0.05: return 12
+	elif aux <= 0.20: return 13
+	elif aux <= 0.45: return 14
+	elif aux <= 0.80: return 15
+	elif aux <= 0.95: return 16
 	else: return 17
 
 def main():
