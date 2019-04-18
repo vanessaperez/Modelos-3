@@ -38,6 +38,11 @@ def demanda_diaria():
 	elif aux <= 0.95: return 16
 	else: return 17
 
+''' Existen 3 ciclos:
+		1 ciclo de simulaciones
+			1 ciclo que verifica todos los puntos de reorden R
+				1 ciclo que itera hasta la cantidad de días maximos para cada punto de reorden R
+'''
 def main():
 
 	costo_inventario = 0.2
@@ -94,7 +99,7 @@ def main():
 				arreglo_costo_por_dia.append(costo)
 				tiempo += 1
 
-			# Buscamos los puntos de reorden optimos
+			# Buscamos los puntos de reorden optimos comparando los costos minimos de cada punto de reorden R
 			costo_promedio = sum(arreglo_costo_por_dia)/len(arreglo_costo_por_dia)
 			if punto_reorden == 0:
 				reorden_optimo = punto_reorden
@@ -103,6 +108,8 @@ def main():
 			elif costo_promedio < costo_minimo:
 				reorden_optimo = punto_reorden
 				costo_minimo = costo_promedio
+
+			print(costo_minimo)
 
 	    # Agregamos cada uno de los puntos de reorden optimo para cada simulacion
 		arreglo_reorden.append(reorden_optimo)
