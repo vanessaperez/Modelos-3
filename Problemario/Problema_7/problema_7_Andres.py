@@ -107,7 +107,7 @@ def main():
 	    # Agregamos cada uno de los puntos de reorden optimo para cada simulacion
 		arreglo_reorden.append(reorden_optimo)
 
-	print(arreglo_reorden)
+	#print(arreglo_reorden)
 	promedio_reorden_optimo = sum(arreglo_reorden)/simulaciones_max
 	m_error_90Reorden = error_90_prcnt(arreglo_reorden, promedio_reorden_optimo)
 
