@@ -51,7 +51,38 @@ def pagar_comision(tipo):
 		else: return 2000
 		
 def main():
-	return True
+
+	vendedores = int(input("Colocar el numero de vendedores: "))
+	tiempo_max = int(input("Colocar el numero de semanas: "))
+	simulaciones_max = Q = int(input("Colocar el numero de simulaciones: "))
+	comision_simulaciones = [0.0 for x in range(simulaciones_max)]
+
+	for simulaciones in range(simulaciones_max):
+		# Iteramos sobre varias semanas
+		comision_vendedores = [0.0 for x in range(vendedores)]
+		for tiempo in range(tiempo_max):
+			# Iteramos sobre los vendedores
+			for vendedor in range(vendedores):
+				comision = 0
+				numero_ventas_por_vendedor = ventas_autos()
+
+				for auto in range(numero_ventas_por_vendedor):
+					tipo = tipo_autos()
+					comision += pagar_comision(tipo)
+
+				# Sumamos la comision por semana
+				comision_vendedores[vendedor] = comision_vendedores[vendedor] + comision
+
+		# Arreglo con el promedio de comision de cada vendedor para TODAS las semanas dada una simulacion
+		promedio_semanal_comision = [ (x/tiempo_max) for x in comision_vendedores ]	
+		comision_simulaciones[simulaciones] = sum(promedio_semanal_comision)/len(promedio_semanal_comision)
+
+	promedio_comision = sum(comision_simulaciones)/simulaciones_max
+	m_error_90Rcomision = error_90_prcnt(comision_simulaciones, promedio_comision)
+
+	print("\nLa comisión promedio por empleado en una semana es de: %d" % (promedio_comision))
+	print("El intervalo de confianza de 90 por ciento de la comision de un empleado en una semana es (%f , %f)" % (promedio_comision - m_error_90Rcomision, promedio_comision + m_error_90Rcomision))
 
 if __name__ == "__main__":
+
 	main()
