@@ -16,6 +16,26 @@ def generarTiempoA():
 def generarTiempoB():
     return np.random.triangular(1,3,5)
 
+def mean_confidence_interval(data, confidence=0.90):
+    a = 1.0*np.array(data)
+    n = len(a)
+    m, se = np.nanmean(a), scipy.stats.sem(a, nan_policy='omit')
+    h = se * sp.stats.t._ppf((1+confidence)/2., n-1)
+    return m, m-h, m+h
+
+
+def varianza(lis_data, promedio):
+    suma = 0
+    for i in range(len(lis_data)):
+        suma += ((lis_data[i] - promedio)*(lis_data[i] - promedio))
+    suma /= (len(lis_data))
+    return suma
+
+def error_90_prcnt (lis_data, promedio):
+    varz = varianza(lis_data, promedio)
+    nmuestra = len(lis_data)
+    return (1.65*(sqrt(varz/nmuestra)))
+
 def simulacion(tiempo_max):
 
     colaA = []
@@ -40,13 +60,13 @@ def simulacion(tiempo_max):
     while tiempo < tiempo_max :
 
         llegada = generarTiempoTrabajo()
-        
+
         acumulado += llegada
-        
+
         llegadas.append(acumulado)
-        
+
         tiempo += 1
-    
+
     tiempo = 0
 
     while tiempo < tiempo_max:
@@ -115,3 +135,12 @@ print('El numero esperado de trabajos en el taller: ',np.mean(cantidad_trabajos)
 print('El porcentaje de tiempo que se para el centro A: '+ str(tiempo_fallo*100/tiempo_max) + '%')
 print('El tiempo esperado de terminacion de un trabajo: ',np.mean(tiempo_terminados))#promedio_terminacion)
 print('Trabajos terminados: ',terminados)
+
+
+print("El promedio del tiempo de falla es: {}".format(np.mean(cantidad_trabajos)))
+
+promedio_falla = np.mean(cantidad_trabajos)
+
+intervalo_confianza = error_90_prcnt(cantidad_trabajos, promedio_falla)
+
+print ("El intervalo de confianza del 90 por ciento es: (%f , %f)" % (promedio_falla - intervalo_confianza, promedio_falla + intervalo_confianza))
